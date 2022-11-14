@@ -17,6 +17,8 @@ function App() {
         setInterval(() => {
           if (!cookie.get("Auth")) {
             setLogin(false);
+          } else {
+            setLogin(true);
           }
         }, 500)
       );

@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import config from "../config/config.json";
 
 export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    document.title = "Login";
+  }, []);
 
   function saveInputs(ev) {
     switch (ev.target.id) {
@@ -19,7 +25,19 @@ export function Login() {
   }
 
   function handleSubmit() {
-    console.log(`Username: ${username} || Password: ${password}`);
+    axios
+      .post(`${config.secure}://${config.domain}:${config.port}/users/create`, {
+        username: window.btoa(username),
+        password: window.btoa(password),
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.data.error) {
+          alert("Error. Contacta con el admin");
+        } else {
+          alert("OK: " + response.data.idUser);
+        }
+      });
   }
 
   return (
