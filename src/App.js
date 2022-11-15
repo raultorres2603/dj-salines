@@ -13,22 +13,22 @@ function App() {
   useEffect(() => {
     if (cookie.get("Auth")) {
       setLogin(true);
-      setComprob(
-        setInterval(() => {
-          if (!cookie.get("Auth")) {
-            setLogin(false);
-          } else {
-            setLogin(true);
-          }
-        }, 500)
-      );
     }
+    setComprob(
+      setInterval(() => {
+        if (!cookie.get("Auth")) {
+          setLogin(false);
+        } else {
+          setLogin(true);
+        }
+      }, 500)
+    );
   }, []);
 
   return (
     <div className="mainMenu">
       <div className="container">
-        <div className="col-md-12">{login ? <MainMenu /> : <Login />}</div>
+        <div className="col-sm-12">{login ? <MainMenu /> : <Login />}</div>
       </div>
     </div>
   );
