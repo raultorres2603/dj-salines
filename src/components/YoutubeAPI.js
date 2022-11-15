@@ -1,7 +1,7 @@
 export class YoutubeAPI {
   constructor() {
     this.apiKEY = "AIzaSyAeivme_yi0vF8jR0pkvwcFRBJXP1vhsII";
-    this.resultsPerPage = 5;
+    this.resultsPerPage = 4;
   }
 
   async getSongs(title) {

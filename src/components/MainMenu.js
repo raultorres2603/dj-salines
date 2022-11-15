@@ -50,69 +50,71 @@ export function MainMenu() {
           <div className="row">
             <div className="col-sm-12">
               <div className="row">
-                <div className="col-sm-6 border border-dark border-5 rounded">
-                  <div className="row">
-                    <p className="text-center display-4">Busca</p>
-                  </div>
-                  <hr />
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <div className="input-group mb-3">
-                        <span className="input-group-text" id="basic-addon1">
-                          🎼
-                        </span>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="URL o título de la canción"
-                          aria-label="Username"
-                          aria-describedby="basic-addon1"
-                          onInput={handleInput}
-                          id="titleSong"
-                        />
-                      </div>
+                <div className="row">
+                  <p className="text-center display-4">Busca</p>
+                </div>
+                <hr />
+                <div className="row">
+                  <div className="col-sm-6">
+                    <div className="input-group mb-3">
+                      <span className="input-group-text" id="basic-addon1">
+                        🎼
+                      </span>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="URL"
+                        aria-label="Username"
+                        aria-describedby="basic-addon1"
+                        onInput={handleInput}
+                        id="titleSong"
+                      />
                     </div>
-                    <div className="col-sm-6">
-                      <div className="row">
-                        <div className="d-grid gap-2">
-                          <button
-                            type="button"
-                            className="btn btn-success"
-                            onClick={searchSong}
-                          >
-                            Confirmar
-                          </button>
-                        </div>
+                  </div>
+                  <div className="col-sm-6">
+                    <div className="row">
+                      <div className="d-grid gap-2">
+                        <button
+                          type="button"
+                          className="btn btn-success"
+                          onClick={searchSong}
+                        >
+                          Confirmar
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-sm-6 border border-dark border-5 rounded">
-                  <div className="row">
-                    <p className="text-center display-4">Elige</p>
-                  </div>
-                  <hr />
-                  <div className="listSongs">
-                    {songs.map((song, index) => (
-                      <div className="card">
-                        <img
-                          src={song.snippet.thumbnails.high.url}
-                          className="card-img-top"
-                          alt="..."
-                        />
-                        <div className="card-body">
-                          <h5 className="card-title">Card title</h5>
-                          <p className="card-text">
-                            Some quick example text to build on the card title
-                            and make up the bulk of the card's content.
-                          </p>
-                          <a href="#" className="btn btn-primary">
-                            Go somewhere
-                          </a>
+
+                <div className="row">
+                  <p className="text-center display-4">Elige</p>
+                </div>
+                <hr />
+                <div className="listSongs row">
+                  {songs.map((song, index) => (
+                    <div className="card w-25" key={index}>
+                      <img
+                        src={song.snippet.thumbnails.high.url}
+                        className="card-img-top"
+                      />
+                      <div className="card-body">
+                        <div className="row h-25 overflow-auto">
+                          <p className="card-title h5">{song.snippet.title}</p>
+                        </div>
+                        <div className="row mt-3">
+                          <div className="d-grid gap-2">
+                            <button
+                              type="button"
+                              className="btn btn-info"
+                              onClick={searchSong}
+                            >
+                              Seleccionar
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
