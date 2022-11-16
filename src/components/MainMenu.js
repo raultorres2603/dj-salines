@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
-import { YoutubeAPI } from "./YoutubeAPI";
+import axios from "axios";
+import config from "../config/config.json";
 
 export function MainMenu() {
   const [username, setUsername] = useState("");
   const [song, setSong] = useState("");
-  const [youtubeAPI, setAPI] = useState(new YoutubeAPI());
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
@@ -15,11 +15,14 @@ export function MainMenu() {
   }, []);
 
   async function searchSong() {
-    if (song.length > 0) {
-      let object = await youtubeAPI.getSongs(song);
-      setSongs(await object.items);
-      console.log(songs);
-    }
+    axios
+      .post(`${config.secure}://${config.domain}:${config.port}/api/search`, {
+        song: song,
+      })
+      .then((response) => {
+        console.log(response);
+        setSongs(response.data);
+      });
   }
 
   function handleInput(ev) {
