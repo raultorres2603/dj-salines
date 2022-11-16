@@ -93,27 +93,37 @@ export function MainMenu() {
                   <p className="text-center display-4">Elige</p>
                 </div>
                 <hr />
-                <div className="listSongs row">
+
+                <div
+                  className="listSongs row"
+                  style={{
+                    height: `50vh`,
+                    width: `100%`,
+                    flexWrap: "nowrap",
+                    overflowX: "auto",
+                  }}
+                >
                   {songs.map((song, index) => (
-                    <div className="card w-25" key={index}>
+                    <div
+                      className="card"
+                      key={index}
+                      style={{ width: `50vh`, height: `auto` }}
+                    >
                       <img
                         src={song.snippet.thumbnails.high.url}
                         className="card-img-top"
                       />
                       <div className="card-body">
-                        <div className="row h-25 overflow-auto">
-                          <p className="card-title h5">{song.snippet.title}</p>
-                        </div>
-                        <div className="row mt-3">
-                          <div className="d-grid gap-2">
-                            <button
-                              type="button"
-                              className="btn btn-info"
-                              onClick={searchSong}
-                            >
-                              Seleccionar
-                            </button>
-                          </div>
+                        <div
+                          className="row overflow-auto"
+                          style={{ height: `10vh` }}
+                        >
+                          <p
+                            className="card-title"
+                            style={{ fontSize: 3 + "vh" }}
+                          >
+                            {song.snippet.title}
+                          </p>
                         </div>
                       </div>
                     </div>
