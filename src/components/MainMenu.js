@@ -20,20 +20,18 @@ export function MainMenu() {
         song: song,
       })
       .then((response) => {
-        console.log(response);
         setSongs(response.data);
       });
   }
 
   function songSelected(ev) {
-    let song = ev.target.value;
+    let songEv = ev.target.id;
     axios
       .post(`${config.secure}://${config.domain}:${config.port}/api/selected`, {
-        song: song,
+        song: songEv,
       })
       .then((response) => {
-        console.log(response);
-        setSongs(response.data);
+        console.log(response.data);
       });
   }
 
@@ -107,7 +105,7 @@ export function MainMenu() {
                 <hr />
 
                 <div
-                  className="listSongs row"
+                  className="listSongs row border border-dark border-5 rounded"
                   style={{
                     height: `50vh`,
                     width: `100%`,
@@ -117,14 +115,14 @@ export function MainMenu() {
                 >
                   {songs.map((song, index) => (
                     <div
-                      className="card"
+                      className="card mr-2"
                       key={index}
                       style={{ width: `50vh`, height: `auto` }}
                     >
                       <img
                         src={song.snippet.thumbnails.high.url}
                         className="card-img-top"
-                        defaultValue={song.id.videoId}
+                        id={song.id.videoId}
                         onClick={songSelected}
                       />
                       <div className="card-body">
