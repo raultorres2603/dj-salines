@@ -25,6 +25,18 @@ export function MainMenu() {
       });
   }
 
+  function songSelected(ev) {
+    let song = ev.target.value;
+    axios
+      .post(`${config.secure}://${config.domain}:${config.port}/api/selected`, {
+        song: song,
+      })
+      .then((response) => {
+        console.log(response);
+        setSongs(response.data);
+      });
+  }
+
   function handleInput(ev) {
     switch (ev.target.id) {
       case "titleSong":
@@ -112,6 +124,8 @@ export function MainMenu() {
                       <img
                         src={song.snippet.thumbnails.high.url}
                         className="card-img-top"
+                        defaultValue={song.id.videoId}
+                        onClick={songSelected}
                       />
                       <div className="card-body">
                         <div
