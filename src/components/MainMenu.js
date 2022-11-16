@@ -31,7 +31,16 @@ export function MainMenu() {
         song: songEv,
       })
       .then((response) => {
-        console.log(response.data);
+        if (response.data.error) {
+          switch (response.data.error) {
+            case 1:
+              alert("No se puede introducir esta canción");
+              break;
+
+            default:
+              break;
+          }
+        }
       });
   }
 
