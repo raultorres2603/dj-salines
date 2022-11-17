@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import axios from "axios";
 import config from "../config/config.json";
+import ReactPlayer from "react-player";
 
 export function MainMenu() {
   const [username, setUsername] = useState("");
   const [song, setSong] = useState("");
   const [songs, setSongs] = useState([]);
+  const [player, setPlayer] = useState(null);
+  const [playing, setPlaying] = useState(true);
 
   useEffect(() => {
     let cookie = new Cookies();
@@ -40,8 +43,30 @@ export function MainMenu() {
             default:
               break;
           }
+        } else {
+          setPlayer(
+            <ReactPlayer
+              className="react-player"
+              url={`https://www.youtube.com/watch?v=${response.data.song}`}
+              width="100%"
+              height="60vh"
+              playing={playing}
+              volume={1}
+              onProgress={(state) => {
+                seeDuration(state);
+              }}
+            />
+          );
         }
       });
+  }
+
+  function seeDuration(state) {
+    console.log(parseInt(state.playedSeconds));
+    if (parseInt(state.playedSeconds) === 30) {
+      console.log("Parar");
+      setPlaying(false);
+    }
   }
 
   function handleInput(ev) {
@@ -150,6 +175,7 @@ export function MainMenu() {
                     </div>
                   ))}
                 </div>
+                <div className="row mt-4">{player}</div>
               </div>
             </div>
           </div>
