@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import axios from "axios";
 import config from "../config/config.json";
+import ReactPlayer from "react-player";
 
 export function MainMenu() {
   const [username, setUsername] = useState("");
   const [song, setSong] = useState("");
   const [songs, setSongs] = useState([]);
+  const [player, setPlayer] = useState(null);
+  const [playing, setPlaying] = useState(true);
 
   useEffect(() => {
     let cookie = new Cookies();
@@ -20,9 +23,50 @@ export function MainMenu() {
         song: song,
       })
       .then((response) => {
-        console.log(response);
         setSongs(response.data);
       });
+  }
+
+  function songSelected(ev) {
+    let songEv = ev.target.id;
+    axios
+      .post(`${config.secure}://${config.domain}:${config.port}/api/selected`, {
+        song: songEv,
+      })
+      .then((response) => {
+        if (response.data.error) {
+          switch (response.data.error) {
+            case 1:
+              alert("No se puede introducir esta canción");
+              break;
+
+            default:
+              break;
+          }
+        } else {
+          setPlayer(
+            <ReactPlayer
+              className="react-player"
+              url={`https://www.youtube.com/watch?v=${response.data.song}`}
+              width="100%"
+              height="60vh"
+              playing={playing}
+              volume={1}
+              onProgress={(state) => {
+                seeDuration(state);
+              }}
+            />
+          );
+        }
+      });
+  }
+
+  function seeDuration(state) {
+    console.log(parseInt(state.playedSeconds));
+    if (parseInt(state.playedSeconds) === 30) {
+      console.log("Parar");
+      setPlaying(false);
+    }
   }
 
   function handleInput(ev) {
@@ -95,7 +139,7 @@ export function MainMenu() {
                 <hr />
 
                 <div
-                  className="listSongs row"
+                  className="listSongs row border border-dark border-5 rounded"
                   style={{
                     height: `50vh`,
                     width: `100%`,
@@ -105,13 +149,15 @@ export function MainMenu() {
                 >
                   {songs.map((song, index) => (
                     <div
-                      className="card"
+                      className="card mr-2"
                       key={index}
                       style={{ width: `50vh`, height: `auto` }}
                     >
                       <img
                         src={song.snippet.thumbnails.high.url}
                         className="card-img-top"
+                        id={song.id.videoId}
+                        onClick={songSelected}
                       />
                       <div className="card-body">
                         <div
@@ -129,6 +175,7 @@ export function MainMenu() {
                     </div>
                   ))}
                 </div>
+                <div className="row mt-4">{player}</div>
               </div>
             </div>
           </div>
