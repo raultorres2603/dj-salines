@@ -44,17 +44,35 @@ export function MainMenu() {
           }
         } else {
           setPlayer(
-            <ReactPlayer
-              className="react-player"
-              url={`https://www.youtube.com/watch?v=${response.data.song}`}
-              width="100%"
-              height="60vh"
-              playing={true}
-              volume={1}
-              onProgress={(state) => {
-                seeDuration(state);
-              }}
-            />
+            <div className="reactPlayer">
+              <div className="row">
+                <div className="d-grid gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-info"
+                    onClick={searchSong}
+                    style={{ fontSize: `3vh` }}
+                  >
+                    Seleccionar
+                  </button>
+                </div>
+              </div>
+              <div className="row">
+                <ReactPlayer
+                  className="react-player"
+                  id="react-player"
+                  url={`https://www.youtube.com/watch?v=${response.data.song}`}
+                  width="100%"
+                  height="60vh"
+                  playing={true}
+                  volume={1}
+                  onProgress={(state) => {
+                    seeDuration(state);
+                    document.getElementById("react-player").scrollIntoView();
+                  }}
+                />
+              </div>
+            </div>
           );
         }
       });
