@@ -9,7 +9,6 @@ export function MainMenu() {
   const [song, setSong] = useState("");
   const [songs, setSongs] = useState([]);
   const [player, setPlayer] = useState(null);
-  const [playing, setPlaying] = useState(true);
 
   useEffect(() => {
     let cookie = new Cookies();
@@ -50,7 +49,7 @@ export function MainMenu() {
               url={`https://www.youtube.com/watch?v=${response.data.song}`}
               width="100%"
               height="60vh"
-              playing={playing}
+              playing={true}
               volume={1}
               onProgress={(state) => {
                 seeDuration(state);
@@ -65,7 +64,7 @@ export function MainMenu() {
     console.log(parseInt(state.playedSeconds));
     if (parseInt(state.playedSeconds) === 30) {
       console.log("Parar");
-      setPlaying(false);
+      setPlayer(null);
     }
   }
 
