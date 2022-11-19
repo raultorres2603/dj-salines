@@ -9,12 +9,17 @@ export function MainMenu() {
   const [song, setSong] = useState("");
   const [songs, setSongs] = useState([]);
   const [player, setPlayer] = useState(null);
+  const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
     let cookie = new Cookies();
     setUsername(cookie.get("User"));
     console.log(username);
   }, []);
+
+  function sendSong(ev) {
+    let songId = ev.target.id;
+  }
 
   async function searchSong() {
     axios
@@ -49,8 +54,9 @@ export function MainMenu() {
                 <div className="d-grid gap-2">
                   <button
                     type="button"
+                    id={response.data.song}
                     className="btn btn-info"
-                    onClick={searchSong}
+                    onClick={sendSong}
                     style={{ fontSize: `3vh` }}
                   >
                     Seleccionar
@@ -68,7 +74,6 @@ export function MainMenu() {
                   volume={1}
                   onProgress={(state) => {
                     seeDuration(state);
-                    document.getElementById("react-player").scrollIntoView();
                   }}
                 />
               </div>
@@ -80,9 +85,13 @@ export function MainMenu() {
 
   function seeDuration(state) {
     console.log(parseInt(state.playedSeconds));
+    document.getElementById("react-player").scrollIntoView();
+    setSeconds(parseInt(state.playedSeconds));
+
     if (parseInt(state.playedSeconds) === 30) {
       console.log("Parar");
       setPlayer(null);
+      setSeconds(0);
     }
   }
 
@@ -191,6 +200,11 @@ export function MainMenu() {
                       </div>
                     </div>
                   ))}
+                </div>
+                <div className="row mt-2">
+                  <p className="text-center display-4">
+                    Previsualización ({seconds})
+                  </p>
                 </div>
                 <div className="row mt-4">{player}</div>
               </div>
