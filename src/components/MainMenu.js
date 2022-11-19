@@ -19,6 +19,7 @@ export function MainMenu() {
 
   function sendSong(ev) {
     let songId = ev.target.id;
+    console.log(songId);
   }
 
   async function searchSong() {
@@ -29,6 +30,11 @@ export function MainMenu() {
       .then((response) => {
         setSongs(response.data);
       });
+  }
+
+  function discardSong() {
+    setPlayer(null);
+    setSeconds(0);
   }
 
   function songSelected(ev) {
@@ -51,16 +57,31 @@ export function MainMenu() {
           setPlayer(
             <div className="reactPlayer">
               <div className="row">
-                <div className="d-grid gap-2">
-                  <button
-                    type="button"
-                    id={response.data.song}
-                    className="btn btn-info"
-                    onClick={sendSong}
-                    style={{ fontSize: `3vh` }}
-                  >
-                    Seleccionar
-                  </button>
+                <div className="col-md-6">
+                  <div className="d-grid gap-2">
+                    <button
+                      type="button"
+                      id={response.data.song}
+                      className="btn btn-info"
+                      onClick={sendSong}
+                      style={{ fontSize: `3vh` }}
+                    >
+                      Seleccionar
+                    </button>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="d-grid gap-2">
+                    <button
+                      type="button"
+                      id={response.data.song}
+                      className="btn btn-danger"
+                      onClick={discardSong}
+                      style={{ fontSize: `3vh` }}
+                    >
+                      Descartar
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="row">
@@ -84,14 +105,12 @@ export function MainMenu() {
   }
 
   function seeDuration(state) {
-    console.log(parseInt(state.playedSeconds));
     document.getElementById("react-player").scrollIntoView();
     setSeconds(parseInt(state.playedSeconds));
 
     if (parseInt(state.playedSeconds) === 30) {
       console.log("Parar");
-      setPlayer(null);
-      setSeconds(0);
+      discardSong();
     }
   }
 
@@ -203,7 +222,8 @@ export function MainMenu() {
                 </div>
                 <div className="row mt-2">
                   <p className="text-center display-4">
-                    Previsualización ({seconds})
+                    Previsualización{" "}
+                    <span className="seconds">({30 - seconds} segundos)</span>
                   </p>
                 </div>
                 <div className="row mt-4">{player}</div>
