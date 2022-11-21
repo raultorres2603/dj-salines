@@ -221,10 +221,18 @@ export function MainMenu() {
                   ))}
                 </div>
                 <div className="row mt-2">
-                  <p className="text-center display-4">
-                    Previsualización{" "}
-                    <span className="seconds">({30 - seconds} segundos)</span>
-                  </p>
+                  <p className="text-center display-4">Previsualización</p>
+                </div>
+                <div className="row">
+                  <div className="progress">
+                    <div
+                      className="progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                      role="progressbar"
+                      style={{ width: seconds * 3.6 + "%" }}
+                      aria-valuemax="100"
+                      aria-valuemin="0"
+                    ></div>
+                  </div>
                 </div>
                 <div className="row mt-4">{player}</div>
               </div>
