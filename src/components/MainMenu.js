@@ -20,7 +20,7 @@ export function MainMenu() {
   function sendSong(ev) {
     let songId = ev.target.id;
     axios
-      .post(`${config.secure}://${config.domain}:${config.port}/api/send`, {
+      .post(`${config.secure}://${config.domain}:${config.port}/api/sended`, {
         videoId: songId,
       })
       .then((response) => {
