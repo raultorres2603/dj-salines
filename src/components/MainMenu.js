@@ -19,12 +19,13 @@ export function MainMenu() {
 
   function sendSong(ev) {
     let songId = ev.target.id;
-    axios
+    let consulta = axios
       .post(`${config.secure}://${config.domain}:${config.port}/api/sended`, {
         videoId: songId,
       })
       .then((response) => {
-        console.log(response);
+        let respuesta = response.data;
+        alert(respuesta.inserted);
       });
   }
 
